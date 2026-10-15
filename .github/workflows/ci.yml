@@ -1,0 +1,15 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - 'ci/khrystyna'
+
+jobs:
+  run-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check repository code
+        uses: actions/checkout@v6
+      - name: Run tests
+        run: pytest
