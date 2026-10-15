@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - 'ci/khrystyna'
+  pull_request:
+    branches:
+      - 'ci/khrystyna'
+  pull_request_review:
+    types: [submitted, edited, dismissed]
 
 jobs:
   run-test:
@@ -15,3 +20,12 @@ jobs:
         run: pip install -r requirements.txt
       - name: Run tests
         run: pytest
+  check-pull-request:
+    if: github.event.review.state == 'approved'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log pull request
+        run: |
+          echo A comment on PR $NUMBER
+        env:
+          NUMBER: ${{ github.event.issue.number }}
